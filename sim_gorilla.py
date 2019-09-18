@@ -101,3 +101,5 @@ def cases():
 
 cant_solicitudes, tiempo_arrivals, tiempo_departures = cases()
 print(cant_solicitudes)
+print(tiempo_arrivals)
+print(tiempo_departures)
