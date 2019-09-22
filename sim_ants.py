@@ -56,7 +56,7 @@ def simulacion(no_server =10, tiempo_sim = 100, lambda_ = 4500,):
             if no_server > n: 
                 for i in rane(no_server):
                     if server[i] == 0: 
-                        server[i] == Na ## el cliente que llego sera atendido en la posicion i
+                        server[i] = Na ## el cliente que llego sera atendido en la posicion i
                         ##calcula el tiempo de salida
                         td[i] = generador(t, lambda_)
                         break
