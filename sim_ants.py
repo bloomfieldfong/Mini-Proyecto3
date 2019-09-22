@@ -54,7 +54,7 @@ def simulacion(no_server =10, tiempo_sim = 100, lambda_ = 4500,):
 
             ##Se agrega un cliente a un servidor que no esta ocupado 
             if no_server > n: 
-                for i in rane(no_server):
+                for i in range(no_server):
                     if server[i] == 0: 
                         server[i] = Na ## el cliente que llego sera atendido en la posicion i
                         ##calcula el tiempo de salida
@@ -62,17 +62,3 @@ def simulacion(no_server =10, tiempo_sim = 100, lambda_ = 4500,):
                         break
             n += 1
 
-        else: 
-            ##Buscamos el td menor de todos los que se ingresaron 
-            t = min(td)
-
-            ##Posicion del mas bajo
-            for i in range(len(td)): 
-                if td[i] == min(td)
-                    pos = i 
-            
-            ##se atendio un nuevo cliente en este servidor 
-            c[pos] += 1
-
-            ##Si todavia hay clientes por atender hay que agregar uno nuevo a la pos que se desocupo 
-        
