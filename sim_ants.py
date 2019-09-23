@@ -105,7 +105,7 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salid
             ##Si no hay clientes que atender entonces td[pos] = inf 
             else:  
                 ## tiempo de salida  = inf
-                td[pos] = 999999
+                td[pos] = 9999999999
                 ##Servidor desocupado
                 server[pos] = 0
             ##Se fue un cliente
