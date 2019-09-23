@@ -17,7 +17,7 @@ def generador(x, lambda_):
 
 
 
-def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_salida = 600):
+def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salida = 10):
 
     ##Tiempos
     t = 0
@@ -34,13 +34,13 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_sali
     # Listas con tiempos
     A = []
     D = []
-    server_esperando = 0
 
 
     server = np.zeros(no_server)
     # clientes atendidos
     c = np.zeros(no_server)
     server_ocupado = np.zeros(no_server)
+    colas_espera = []
 
     while t < tiempo_sim or n == 0:
         
@@ -48,30 +48,36 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_sali
         ##Se verifica si hay algun servidor que esta saliendo
         
         
-        if ta == min(min(td), ta) and t<tiempo_sim: 
-            t = ta # avanzamos el tiempo al tiempo de llegada
-            Na += 1 ##Contador de clientes
-            ta = generador(t,lambda_entrada) # proxima llegada
-            A.append(t)
+        if ta == min(min(td), ta): 
 
-            ##Se agrega un cliente a un servidor que no esta ocupado 
-            if no_server > n: 
-                for i in range(0,no_server):
-                    ##Si un verdor esta disponible
-                    if server[i] == 0: 
-                        server[i] = Na ## el cliente que llego sera atendido en la posicion i
-                        ##calcula el tiempo de salida
-                        td[i] = generador(t, lambda_salida)  
-                        ##Tiempo en el que el servidor estuvo ocupado (se le resta la t ya que ese es el tiempo actual que tuve el proceso)
-                        server_ocupado[i]+= td[i] -t
-                        break
-            else: 
+            if t< tiempo_sim: 
+                t = ta # avanzamos el tiempo al tiempo de llegada
+                Na += 1 ##Contador de clientes
+                ta = generador(t,lambda_entrada) # proxima llegada
+                A.append(t)
+
+                ##Se agrega un cliente a un servidor que no esta ocupado 
+                if no_server > n: 
+                    for i in range(0,no_server):
+                        ##Si un verdor esta disponible
+                        if server[i] == 0: 
+                            server[i] = Na ## el cliente que llego sera atendido en la posicion i
+                            ##calcula el tiempo de salida
+                            td[i] = generador(t, lambda_salida)  
+                            ##Tiempo en el que el servidor estuvo ocupado (se le resta la t ya que ese es el tiempo actual que tuve el proceso)
+                            server_ocupado[i]+= td[i] -t
+                            break
+                else: 
                 ##Catnidad de servidores que tuvieron que esperar 
-                et +=1
-                
-            ##Entro un nuevo cliente           
-            n += 1
+                    et +=1
+                    colas_espera.append(min(td)-t)
+
+                    
             
+                
+                ##Entro un nuevo cliente           
+                n += 1
+                
         ## CASO 2 Y 3: verifica si el tiempo de salida es mayor al tiempo actual
         ##Si hay un tiempo de salida menor del tiempo actual entonces significa que termino 
         ##el proceso y se desocupo el servidor. Se agregara un nuevo servidor a la posicion que salio
@@ -89,7 +95,7 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_sali
 
             ##Si todavia hay clientes por atender hay que agregar uno nuevo a la posicion que se desocupo 
             if n >= no_server: 
-                server_esperando+= 1
+
                 ##Se agrega al nuevo tiempo justo despues de que se va el 
                 server[pos] =Na+ 1
                 td[pos] = generador(t, lambda_salida)
@@ -104,17 +110,22 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_sali
                 server[pos] = 0
             ##Se fue un cliente
             n -= 1
-            
+    print("\n##########################################")  
+    print("#Servidores: "+str(no_server)+", Tiempo de simulacion: "+str(tiempo_sim)+"#")
+    print("##########################################")      
     print("\nLos servidores atendieron "+ str(c))
     print("\nLos servidores estuvieron ocupados por: "+ str(server_ocupado))
+    print("\nPromedio de server ocupado: "+str(np.sum(server_ocupado)/no_server))
     print("\nLos servidores estuvieron descoupados por: "+str(tiempo_sim - server_ocupado))
-    print("\nLos procesos estuvieron en cola por: ")
+    print("\nLos procesos en cola tuviero que esperar: "+str(np.sum(colas_espera)))
     print("\nLa cantidad de procesos que tuvieron que esperar son:"+str(et))
-    print("\nEl tiempo en que se atendio el ultimo proceso es de: "+str(D[-1])+" minutos")
+    print("\nEl tiempo en que se atendio el ultimo proceso es de: "+str(D[-1])+" s")
     print("\nSe atendieron "+str(Na)+ " cantidad de procesos")
+    
 
-    print(A-D)
-  
+
+
 
 
 simulacion()
+simulacion(10, 1000,40,10)
