@@ -67,9 +67,9 @@ def cases(solicitudes):
             n = n - 1
             Nd = Nd + 1
             if( n == 0 ):
-                td = 9999999#float("inf")
+                td = 9999999999999#float("inf")
             else:  
-                Y = generador( t, solicitudes_real )
+                Y = generador( t, 100 )
             D.append(Nd)
 
         ## Caso 3
@@ -78,16 +78,16 @@ def cases(solicitudes):
             n = n - 1
             Nd = Nd + 1
             if(n > 0):
-                Y = generador( t, solicitudes_real )
+                Y = generador( t, 100 )
                 td = t + Y
             D.append(Nd)
             
         ## Caso 4
         if(min(ta, td) > T and n == 0):
-            Tp = max(time.time() - T, 0)
+            Tp = max(t - T, 0)
             break
 
-    return Na, Nd, ta, td, A, D
+    return n, Na, Nd, ta, td, A, D, Tp
 
 #solicitudes = sys.argv[0]
 #print(str(solicitudes))
@@ -97,7 +97,7 @@ def cases(solicitudes):
 solicitudes_inicial = int(sys.argv[1])
 
 # Ejecutar cases()
-cant_solicitudes, cant_departures, tiempo_arrivals, tiempo_departures, multiple_arrivals, multiple_departures = cases(solicitudes_inicial)
+cant_solicitudes_reales, cant_solicitudes, cant_departures, tiempo_arrivals, tiempo_departures, multiple_arrivals, multiple_departures, tiempo_maximo = cases(solicitudes_inicial)
 
 # Calcular tiempo idle
 idle_time_list = []
@@ -136,6 +136,5 @@ print(" Cantidad de solicitudes atendidas por el servidor: ", cant_solicitudes, 
       "Tiempo en idle: ", idle_time, "\n",
       "Tiempo en cola: ", abs(arrivals_time), "\n",
       "Tiempo promedio de cada solicitud en cola: ", tiempo_promedio, "\n",
-      "Solicitudes en cola por segundo: ", idle_time, "\n",
-      "Momento de salida de la ultima solicitud: ", multiple_departures[last - 1], "\n",)
-#cases()
+      "Tiempo solicitudes en cola por segundo: ", tiempo_promedio/cant_solicitudes, "\n",
+      "Momento de salida de la ultima solicitud: ", tiempo_maximo, "\n",)
