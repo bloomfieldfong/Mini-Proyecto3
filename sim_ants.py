@@ -128,4 +128,11 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salid
 
 
 simulacion()
-simulacion(10, 1000,40,10)
+
+##no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salida = 10
+
+##Numeros de server 
+##Tiempo de la simulacion
+##lambda de entrada: cuantas solicitudes de entrada por segundo
+##lambda de salida: cuantas solicitudes realiza por segundo
+simulacion(20 , 3600,40,10)
