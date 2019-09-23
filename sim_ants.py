@@ -17,7 +17,7 @@ def generador(x, lambda_):
 
 
 
-def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_salida = 600):
+def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salida = 10):
 
     ##Tiempos
     t = 0
@@ -110,18 +110,22 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 2400,lambda_sali
                 server[pos] = 0
             ##Se fue un cliente
             n -= 1
-            
+    print("\n##########################################")  
+    print("#Servidores: "+str(no_server)+", Tiempo de simulacion: "+str(tiempo_sim)+"#")
+    print("##########################################")      
     print("\nLos servidores atendieron "+ str(c))
     print("\nLos servidores estuvieron ocupados por: "+ str(server_ocupado))
+    print("\nPromedio de server ocupado: "+str(np.sum(server_ocupado)/no_server))
     print("\nLos servidores estuvieron descoupados por: "+str(tiempo_sim - server_ocupado))
-    print("\nLos procesos estuvieron en cola por: ")
+    print("\nLos procesos en cola tuviero que esperar: "+str(np.sum(colas_espera)))
     print("\nLa cantidad de procesos que tuvieron que esperar son:"+str(et))
-    print("\nEl tiempo en que se atendio el ultimo proceso es de: "+str(D[-1])+" minutos")
+    print("\nEl tiempo en que se atendio el ultimo proceso es de: "+str(D[-1])+" s")
     print("\nSe atendieron "+str(Na)+ " cantidad de procesos")
-    print("\nLos procesos en cola tuviero que esperar: "np.sum(colas_espera))
+    
 
 
 
 
 
 simulacion()
+simulacion(10, 1000,40,10)
