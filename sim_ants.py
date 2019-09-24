@@ -127,5 +127,7 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salid
 
 
 
-simulacion()
-simulacion(10, 1000,40,10)
+#simulacion()
+#simulacion(10, 1000,40,10)
+#simulacion(12, 3600, 40, 10)
+simulacion(10, 3600, 40, 10)
