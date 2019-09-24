@@ -127,7 +127,19 @@ def simulacion(no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salid
 
 
 
+<<<<<<< HEAD
 #simulacion()
 #simulacion(10, 1000,40,10)
 #simulacion(12, 3600, 40, 10)
 simulacion(10, 3600, 40, 10)
+=======
+simulacion()
+
+##no_server =10, tiempo_sim = 60, lambda_entrada = 40, lambda_salida = 10
+
+##Numeros de server 
+##Tiempo de la simulacion
+##lambda de entrada: cuantas solicitudes de entrada por segundo
+##lambda de salida: cuantas solicitudes realiza por segundo
+simulacion(20 , 3600,40,10)
+>>>>>>> ad086aaa3b9ea5c78ad83f0a80af84452258a05c
